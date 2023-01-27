@@ -293,6 +293,10 @@ class PlacesAutocompleteResultState extends State<PlacesAutocompleteResult> {
   }
 }
 
+void a() {}
+
+typedef ControllerExposed = Function(TextEditingController);
+
 class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
   final InputDecoration? textDecoration;
   final TextStyle? textStyle;
@@ -301,8 +305,9 @@ class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
     Key? key,
     this.textDecoration,
     this.textStyle,
+    this.controllerExposed,
   }) : super(key: key);
-
+  final ControllerExposed? controllerExposed;
   @override
   AppBarPlacesAutoCompleteTextFieldState createState() =>
       AppBarPlacesAutoCompleteTextFieldState();
@@ -310,6 +315,19 @@ class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
 
 class AppBarPlacesAutoCompleteTextFieldState
     extends State<AppBarPlacesAutoCompleteTextField> {
+  @override
+  void initState() {
+    if (widget.abidin != null) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        final state = PlacesAutocompleteWidget.of(context)!;
+
+        widget.abidin!.call(state._queryTextController!);
+      });
+    }
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = PlacesAutocompleteWidget.of(context)!;
