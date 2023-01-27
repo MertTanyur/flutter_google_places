@@ -317,11 +317,11 @@ class AppBarPlacesAutoCompleteTextFieldState
     extends State<AppBarPlacesAutoCompleteTextField> {
   @override
   void initState() {
-    if (widget.abidin != null) {
+    if (widget.controllerExposed != null) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         final state = PlacesAutocompleteWidget.of(context)!;
 
-        widget.abidin!.call(state._queryTextController!);
+        widget.controllerExposed!.call(state._queryTextController!);
       });
     }
     // TODO: implement initState
