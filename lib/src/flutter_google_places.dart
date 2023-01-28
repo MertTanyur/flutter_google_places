@@ -337,7 +337,6 @@ class AppBarPlacesAutoCompleteTextFieldState
       margin: const EdgeInsets.only(top: 4.0),
       child: TextField(
         controller: state._queryTextController,
-        autofocus: true,
         style: widget.textStyle ?? _defaultStyle(),
         decoration:
             widget.textDecoration ?? _defaultDecoration(state.widget.hint),
