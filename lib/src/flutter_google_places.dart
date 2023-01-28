@@ -221,7 +221,7 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
 
   Widget _textField(BuildContext context) => TextField(
         controller: _queryTextController,
-        autofocus: true,
+        // autofocus: true,
         style: widget.textStyle ??
             TextStyle(
               color: Theme.of(context).brightness == Brightness.light
