@@ -296,6 +296,7 @@ class PlacesAutocompleteResultState extends State<PlacesAutocompleteResult> {
 void a() {}
 
 typedef ControllerExposed = Function(TextEditingController);
+typedef FocusNodeExposed = Function(FocusNode);
 
 class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
   final InputDecoration? textDecoration;
@@ -306,8 +307,10 @@ class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
     this.textDecoration,
     this.textStyle,
     this.controllerExposed,
+    this.focusNodeExposed,
   }) : super(key: key);
   final ControllerExposed? controllerExposed;
+  final FocusNodeExposed? focusNodeExposed;
   @override
   AppBarPlacesAutoCompleteTextFieldState createState() =>
       AppBarPlacesAutoCompleteTextFieldState();
@@ -315,12 +318,16 @@ class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
 
 class AppBarPlacesAutoCompleteTextFieldState
     extends State<AppBarPlacesAutoCompleteTextField> {
+  FocusNode? focusNode;
   @override
   void initState() {
     if (widget.controllerExposed != null) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         final state = PlacesAutocompleteWidget.of(context)!;
-
+        if (widget.focusNodeExposed != null) {
+          focusNode = FocusNode();
+          widget.focusNodeExposed!.call();
+        }
         widget.controllerExposed!.call(state._queryTextController!);
       });
     }
@@ -336,6 +343,7 @@ class AppBarPlacesAutoCompleteTextFieldState
       alignment: Alignment.topLeft,
       margin: const EdgeInsets.only(top: 4.0),
       child: TextField(
+        focusNode: focusNode,
         controller: state._queryTextController,
         style: widget.textStyle ?? _defaultStyle(),
         decoration:
