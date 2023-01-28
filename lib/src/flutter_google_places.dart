@@ -326,13 +326,20 @@ class AppBarPlacesAutoCompleteTextFieldState
         final state = PlacesAutocompleteWidget.of(context)!;
         if (widget.focusNodeExposed != null) {
           focusNode = FocusNode();
-          widget.focusNodeExposed!.call();
+          widget.focusNodeExposed!.call(focusNode!);
         }
         widget.controllerExposed!.call(state._queryTextController!);
       });
     }
     // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    focusNode?.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
